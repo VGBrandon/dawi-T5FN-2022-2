@@ -264,8 +264,9 @@ public class FrmManteProd extends JFrame {
 		}else {
 			txtDescripcion.setText(p.getDes_prod());
 			txtStock.setText(p.getStk_prod()+ "");
-			//Tarea completar
-			
+			cboCategorias.setSelectedIndex(p.getIdcategoria());
+			cboProveedores.setSelectedIndex(p.getIdproveedor());
+			txtPrecio.setText(p.getPre_prod()+ "");				
 		}
 	}
 	
