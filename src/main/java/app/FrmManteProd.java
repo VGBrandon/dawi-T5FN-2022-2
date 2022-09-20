@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import model.Categoria;
 import model.Producto;
@@ -25,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JTable;
 
 public class FrmManteProd extends JFrame {
 
@@ -37,7 +39,11 @@ public class FrmManteProd extends JFrame {
 	private JTextField txtDescripcion;
 	private JTextField txtStock;
 	private JTextField txtPrecio;
+	private JTable tblSalida;
+	
+	//Agregando valor global de la tabla
 
+	DefaultTableModel modelo = new DefaultTableModel();
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +66,7 @@ public class FrmManteProd extends JFrame {
 	public FrmManteProd() {
 		setTitle("Mantenimiento de Productos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 390);
+		setBounds(100, 100, 450, 693);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -88,7 +94,7 @@ public class FrmManteProd extends JFrame {
 				listado();
 			}
 		});
-		btnListado.setBounds(177, 322, 89, 23);
+		btnListado.setBounds(173, 335, 89, 23);
 		contentPane.add(btnListado);
 
 		txtCodigo = new JTextField();
@@ -151,7 +157,22 @@ public class FrmManteProd extends JFrame {
 		});
 		btnBuscar.setBounds(324, 63, 89, 23);
 		contentPane.add(btnBuscar);
-
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 378, 414, 265);
+		contentPane.add(scrollPane_1);
+		
+		tblSalida = new JTable();
+		scrollPane_1.setViewportView(tblSalida);
+		//Agregando tabla
+		tblSalida.setModel(modelo);
+		modelo.addColumn("Codigo");
+		modelo.addColumn("Producto");
+		modelo.addColumn("Stock");
+		modelo.addColumn("Precio");
+		modelo.addColumn("Categoria");
+		modelo.addColumn("Provedor");
+		
 		llenaCombo();
 	}
 
@@ -238,7 +259,10 @@ public class FrmManteProd extends JFrame {
 			imprimir("Estado : " + p.getEst_prod()) ;
 			imprimir("Id Proveedor : " + p.getIdproveedor()+ " - " + p.getObjProveedor().getNombre_rs()) ;
 	
-			
+			//Para la tabla
+			Object datos[] = {p.getId_prod(),p.getDes_prod(),p.getStk_prod(),p.getPre_prod(),
+							  p.getIdcategoria()+ " - " + p.getObjCategoria(),p.getDes_prod(),
+							  p.getIdproveedor()+ " - "+ p.getObjProveedor().getNombre_rs()};
 		}
 		
 		//cerrar
@@ -289,6 +313,4 @@ public class FrmManteProd extends JFrame {
 	void imprimir(String s) {
 			txtSalida.append(s+"\n");
 	}
-	
-	
 }
